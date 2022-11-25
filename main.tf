@@ -1,25 +1,25 @@
 provider "aws" {
   region = var.region
+  default_tags {
+    tags = {
+      "automation:CreatedBy"         = "Terraform Cloud"
+      "technical:TerraformWorkspace" = terraform.workspace
+    }
+  }
+
 }
 
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ami" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20221103.3-x86_64-gp2*"]
   }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "ubuntu" {
-  ami           = data.aws_ami.ubuntu.id
+resource "aws_instance" "instance1" {
+  ami           = data.aws_ami.ami.id
   instance_type = var.instance_type
 
   tags = {
