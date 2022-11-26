@@ -23,7 +23,8 @@ module "example_instance" {
 
   name          = var.instance_name
   instance_type = var.instance_type
-  subnet_id     = data.aws_subnets.private_subnets.ids[0]
+  //subnet_id     = data.aws_subnets.private_subnets.ids[0]
+  subnet_id = "subnet-091ef76c2607e5010"
   ami           = data.aws_ami.ami.id
 }
 
