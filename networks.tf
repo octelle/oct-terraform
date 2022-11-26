@@ -37,7 +37,7 @@ module "vpc" {
   cidr = each.value.cidr
 
   azs                  = local.azs
-  private_subnets      = concat(each.value.private, each.value.deployment)
+  private_subnets      = each.value.private
   private_subnet_names = [for i in setproduct(["oct-${var.environment}-${each.key}-private"], local.azs) : join("-", i)]
   public_subnets       = each.value.public
   intra_subnets        = each.value.tgw
