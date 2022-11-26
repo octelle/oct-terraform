@@ -22,7 +22,7 @@ data "aws_ami" "al2" {
 
 module "example_instance" {
   source  = "app.terraform.io/octelle/module-ec2/tf"
-  version = "~> 1.0.5"
+  version = "~> 1.0.6"
 
   name            = var.instance_name
   instance_type   = var.instance_type
