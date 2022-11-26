@@ -6,7 +6,6 @@ provider "aws" {
       "technical:TerraformWorkspace" = terraform.workspace
     }
   }
-
 }
 
 data "aws_ami" "ami" {
@@ -18,11 +17,13 @@ data "aws_ami" "ami" {
   }
 }
 
-resource "aws_instance" "instance1" {
-  ami           = data.aws_ami.ami.id
-  instance_type = var.instance_type
+module "example_instance" {
+  source  = "app.terraform.io/octelle/module-ec2/tf"
+  version = "~> 1.0.0"
 
-  tags = {
-    Name = var.instance_name
-  }
+  name          = var.instance_name
+  instance_type = var.instance_type
+  subnet_id     = data.aws_subnets.private_subnets.ids[0]
+  ami           = data.aws_ami.ami.id
 }
+
