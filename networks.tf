@@ -33,12 +33,12 @@ module "vpc" {
   source   = "terraform-aws-modules/vpc/aws"
   version  = "~>3.18.1"
 
-  name = "bp-${var.environment}-${each.key}"
+  name = "oct-${var.environment}-${each.key}"
   cidr = each.value.cidr
 
   azs                  = local.azs
   private_subnets      = concat(each.value.private, each.value.deployment)
-  private_subnet_names = each.key == "development" ? null : [for i in setproduct(["bp-${var.environment}-${each.key}-private", "bp-${var.environment}-${each.key}-development"], local.azs) : join("-", i)]
+  private_subnet_names = each.key == "development" ? null : [for i in setproduct(["oct-${var.environment}-${each.key}-private", "oct-${var.environment}-${each.key}-development"], local.azs) : join("-", i)]
   public_subnets       = each.value.public
   intra_subnets        = each.value.tgw
   intra_subnet_suffix  = "tgw"
